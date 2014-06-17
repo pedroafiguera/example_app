@@ -6,7 +6,13 @@ ExampleApp::Application.routes.draw do
   get "contact" => "static_pages#contact"
 
   get "signup" => "users#new"
+  get "signin" => "sessions#new"
+  get "signout" => "sessions#destroy", via: :delete
+
+
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
+
 
 
 
