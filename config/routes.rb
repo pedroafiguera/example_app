@@ -10,10 +10,14 @@ ExampleApp::Application.routes.draw do
   get "signout" => "sessions#destroy", via: :delete
 
 
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
-
+  resources :relationships, only: [:create, :destroy]
 
 
 

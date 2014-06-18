@@ -25,24 +25,40 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
-end
+  end
 
-def destroy
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User deleted."
     redirect_to users_url
   end
 
-def edit
-end
+  def edit
+  end
 
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      redirect_to @user
+        redirect_to @user
     else
       render 'edit'
+    end
   end
+
 
 private
     def user_params
